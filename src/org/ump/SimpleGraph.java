@@ -38,7 +38,7 @@ public class SimpleGraph<T> {
         // But what is the difference between BFS?
         // so BFS
         // variable with all founded ways
-        Map<Vertex<T>, List<Edge>> paths = new HashMap<Vertex<T>, List<Edge> >();
+        Map<Vertex<T>, List<Edge>> paths = new HashMap<Vertex<T>, List<Edge>>();
         // all new vertises, still not checked
         List<Vertex<T>> curList = new ArrayList<Vertex<T>>();
         curList.add(a); // add start
@@ -50,7 +50,15 @@ public class SimpleGraph<T> {
 
                         System.out.println(vtx.val);
                         nextList.add(edge.next);
-                        List<Edge> curPath = paths.get(vtx);
+                        // we will take all paths from previous points
+                        // and add new edge to it.
+                        // For first one we will create list
+                        List<Edge> curPath;
+                        if(paths.get(vtx)!=null){
+                            curPath = new ArrayList<Edge>(paths.get(vtx));
+                        }else{
+                            curPath = new ArrayList<Edge>();
+                        }
                         curPath.add(edge);
                         if(edge.getNext().equals(b)){
                             return curPath;
