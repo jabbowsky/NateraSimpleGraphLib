@@ -7,6 +7,9 @@ public class Vertex<T> {
     T val;
     List<Edge> edges = new ArrayList<Edge>();
 
+    public Vertex(T val){
+        this.val= val;
+    }
     public T getVal() {
         return val;
     }

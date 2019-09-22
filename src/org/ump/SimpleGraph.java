@@ -47,6 +47,9 @@ public class SimpleGraph<T> {
             for(Vertex<T> vtx : curList){
                 for(Edge edge : vtx.getEdges()){
                     if(!paths.containsKey(edge.next)){
+
+                        System.out.println(vtx.val);
+                        nextList.add(edge.next);
                         List<Edge> curPath = paths.get(vtx);
                         curPath.add(edge);
                         if(edge.getNext().equals(b)){
