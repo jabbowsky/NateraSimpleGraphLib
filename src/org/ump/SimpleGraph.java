@@ -36,14 +36,27 @@ public class SimpleGraph<T> {
         // there is we will implement copy Dejkstra
         // without checking optimal weights but only moving
         // But what is the difference between BFS?
-        Map<Vertex<T>, Double> length = new HashMap<Vertex<T>, Double>();
-        Vertex<T> cur = a;
-        while(!length.containsKey(cur)){
-            for(Edge edge : cur.getEdges()){
-                if(!length.containsKey(edge.next)){
-                    length.put(edge.getNext(), edge.getWeight());
+        // so BFS
+        // variable with all founded ways
+        Map<Vertex<T>, List<Edge>> paths = new HashMap<Vertex<T>, List<Edge> >();
+        // all new vertises, still not checked
+        List<Vertex<T>> curList = new ArrayList<Vertex<T>>();
+        curList.add(a); // add start
+        while(curList.size()>0){
+            List<Vertex<T>> nextList = new ArrayList<Vertex<T>>();
+            for(Vertex<T> vtx : curList){
+                for(Edge edge : vtx.getEdges()){
+                    if(!paths.containsKey(edge.next)){
+                        List<Edge> curPath = paths.get(vtx);
+                        curPath.add(edge);
+                        if(edge.getNext().equals(b)){
+                            return curPath;
+                        }
+                        paths.put(edge.getNext(),curPath);
+                    }
                 }
             }
+            curList= nextList;
         }
         return path;
     }
