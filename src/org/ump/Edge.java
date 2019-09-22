@@ -1,7 +1,6 @@
 package org.ump;
 
 public class Edge {
-    Vertex prev;
     Vertex next;
     double weight = 1.0;
     Edge(Vertex next,double weight){
@@ -24,14 +23,5 @@ public class Edge {
     public void setWeight(double weight) {
         this.weight = weight;
     }
-
-    public Vertex getPrev() {
-        return prev;
-    }
-
-    public void setPrev(Vertex prev) {
-        this.prev = prev;
-    }
-
 
 }

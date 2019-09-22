@@ -6,12 +6,21 @@ public class SimpleGraph<T> {
     Set<Vertex<T>> vertexes = new HashSet<Vertex<T>>();
     boolean directed = false;
 
-    public SimpleGraph(){
-        directed = false;
+    public static class Builder{
+
+        private boolean directed = false;
+        public Builder setDirected() {
+            this.directed = true;
+            return this;
+        }
+
+        public SimpleGraph build(){
+            return new SimpleGraph(this);
+        }
     }
 
-    public SimpleGraph(Boolean directed){
-        this.directed = directed;
+    SimpleGraph(Builder bld){
+        this.directed = bld.directed;
     }
 
     public void addVertex(Vertex<T> v){
@@ -30,9 +39,13 @@ public class SimpleGraph<T> {
     }
 
     public List<Edge> getPath(Vertex a, Vertex b){
-        // check a and b
-
+        // check a and b not null and not equal
         List<Edge> path = new ArrayList<Edge>();
+        if(!vertexes.contains(a)
+                || !vertexes.contains(b)
+                || a.equals(b)
+            ){return path;}
+
         // there is we will implement copy Dejkstra
         // without checking optimal weights but only moving
         // But what is the difference between BFS?
@@ -47,8 +60,6 @@ public class SimpleGraph<T> {
             for(Vertex<T> vtx : curList){
                 for(Edge edge : vtx.getEdges()){
                     if(!paths.containsKey(edge.next)){
-
-                        System.out.println(vtx.val);
                         nextList.add(edge.next);
                         // we will take all paths from previous points
                         // and add new edge to it.
