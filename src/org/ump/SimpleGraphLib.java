@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SimpleGraphLib {
     public static void main(String[] args){
-
+        /*
         SimpleGraph g = new SimpleGraph.Builder().setDirected().build();
         int testSize = 10;
         Vertex[] vrtx = new Vertex[testSize];
@@ -30,6 +30,6 @@ public class SimpleGraphLib {
                 }
                 System.out.println("");
             }
-        }
+        }*/
     }
 }
