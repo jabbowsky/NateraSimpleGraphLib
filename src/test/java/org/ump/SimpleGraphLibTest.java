@@ -1,16 +1,9 @@
 package org.ump;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.List;
 
 public class SimpleGraphLibTest {
 
@@ -96,7 +89,7 @@ public class SimpleGraphLibTest {
         }
 
         for (int i = 0; i < 100; i++) {
-            System.out.println(graph.pathToString(graph.getPath(vertices[i], vertices[graph.getCountVertices() - 1 - i]), "->"));
+            String textPath = graph.pathToString(graph.getPath(vertices[i], vertices[graph.getCountVertices() - 1 - i]), "->");
         }
         assertTrue(true);
     }
