@@ -8,8 +8,6 @@ public abstract class Graph<T> implements IGraph<T> {
     protected List<List<Edge<T>>> edges;
 
     private int countVertices;
-    private boolean directed;
-
 
     Graph() {
         countVertices = 0;
@@ -17,15 +15,12 @@ public abstract class Graph<T> implements IGraph<T> {
         edges = new ArrayList<>();
     }
 
-    Graph(boolean directed) {
-        this();
-        this.directed = directed;
-    }
-
     public void addVertex(T vertex) {
-        vertices.add(vertex);
-        edges.add(new ArrayList<>());
-        countVertices++;
+        if( findVertexIndex(vertex) != -1){
+            vertices.add(vertex);
+            edges.add(new ArrayList<>());
+            countVertices++;
+        }
     }
 
     public final void addEdge(Edge<T> edge) {
@@ -44,16 +39,14 @@ public abstract class Graph<T> implements IGraph<T> {
         edges.set(indexFrom, edgeList);
     }
 
-    public final void addEdge(T from, T to) {
-        __addEdge(from, to, !directed);
+    public void addEdge(T from, T to) {
+        addEdgeInt(from, to);
+        addEdgeInt(to, from);
     }
 
-    private void __addEdge(T from, T to, boolean addBack) {
+    private void addEdgeInt(T from, T to) {
         Edge<T> edge = new Edge<>(from, to);
         addEdge(edge);
-        if (addBack) {
-            __addEdge(to, from, false);
-        }
     }
 
     public List<Edge<T>> getPath(T from, T to) {
