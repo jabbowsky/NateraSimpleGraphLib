@@ -1,7 +1,5 @@
 package org.ump;
 
-import java.io.BufferedWriter;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public abstract class Graph<T> implements IGraph<T> {
@@ -33,6 +31,14 @@ public abstract class Graph<T> implements IGraph<T> {
     public final void addEdge(Edge<T> edge) {
         T from = edge.getFrom();
         int indexFrom = findVertexIndex(from);
+        if (indexFrom == -1) {
+            System.err.println("addEdge: Vertex 'from' not founded");
+            return;
+        }
+        if (findVertexIndex(edge.getTo()) == -1) {
+            System.err.println("getPath: Vertex 'to' not founded");
+            return;
+        }
         List<Edge<T>> edgeList = edges.get(indexFrom);
         edgeList.add(edge);
         edges.set(indexFrom, edgeList);
@@ -53,13 +59,21 @@ public abstract class Graph<T> implements IGraph<T> {
     public List<Edge<T>> getPath(T from, T to) {
         int n = vertices.size();
 
+        int fromIndex = findVertexIndex(from);
+        if (fromIndex == -1) {
+            System.err.println("getPath: Vertex 'from' not founded");
+            return null;
+        }
+        int finalIndex = findVertexIndex(to);
+        if (finalIndex == -1) {
+            System.err.println("getPath: Vertex 'to' not founded");
+            return null;
+        }
+
         int[] parent = new int[n];
         Arrays.fill(parent, -1);
         int[] parentEdge = new int[n];
         Arrays.fill(parentEdge, -1);
-
-        int fromIndex = findVertexIndex(from);
-        int finalIndex = findVertexIndex(to);
         List<Integer> currentStepVerteces = new ArrayList<>();
         currentStepVerteces.add(fromIndex);
 
@@ -68,15 +82,19 @@ public abstract class Graph<T> implements IGraph<T> {
             for (int parentIndex : currentStepVerteces) {
                 List<Edge<T>> edgeList = edges.get(parentIndex);
 
-                for (int edgeId = 0; edgeId < edgeList.size(); edgeId++) {
-                    Edge<T> curEdge = edgeList.get(edgeId);
+                for (int edgeIndex = 0; edgeIndex < edgeList.size(); edgeIndex++) {
+                    Edge<T> curEdge = edgeList.get(edgeIndex);
                     int indexTo = findVertexIndex(curEdge.getTo());
+                    if (indexTo == -1) {
+                        System.err.println("getPath(parentIndex: " + parentIndex + "; edgeIndex: " + edgeIndex + "): Vertex 'to' not founded");
+                        continue;
+                    }
                     if (parent[indexTo] == -1) {
 
                         nextStepVerteces.add(indexTo);
 
                         parent[indexTo] = parentIndex;
-                        parentEdge[indexTo] = edgeId;
+                        parentEdge[indexTo] = edgeIndex;
 
                         if (indexTo == finalIndex) {
                             return rebuildPath(parent, parentEdge, finalIndex, fromIndex);
@@ -122,14 +140,17 @@ public abstract class Graph<T> implements IGraph<T> {
 
     public String pathToString(List<Edge<T>> path, String delimiter) {
         StringBuilder stringMaker = new StringBuilder();
-        for (Edge<T> edge : path) {
-            stringMaker.append(' ');
-            stringMaker.append(edge.getFrom().toString());
-            stringMaker.append(delimiter);
-            stringMaker.append(edge.getTo().toString());
+        if (path != null) {
+            for (Edge<T> edge : path) {
+                stringMaker.append(' ');
+                stringMaker.append(edge.getFrom().toString());
+                stringMaker.append(delimiter);
+                stringMaker.append(edge.getTo().toString());
+            }
         }
         return stringMaker.toString();
     }
 
-
 }
+
+

@@ -70,6 +70,40 @@ public class SimpleGraphLibTest {
     }
 
     @Test
+    public void testMissingVertex() {
+        SimpleGraph<String> graph = new SimpleGraph<>();
+        int testSize = 10;
+        String[] vertices = new String[testSize];
+        for (int i = 0; i < testSize; i++) {
+            vertices[i] = "v" + String.valueOf(i);
+            graph.addVertex(vertices[i]);
+            for (int j = 0; j < i; j++) {
+                if (i < j + 3) {
+                    graph.addEdge(vertices[i], vertices[j]);
+                    if (j % 2 == 0) {
+                        graph.addEdge(vertices[j], vertices[i]);
+                    }
+                }
+            }
+        }
+
+        String result = graph.pathToString(graph.getPath(vertices[0], "v1000"), "->");
+        assertEquals("", result);
+        graph.addEdge(vertices[0], "v1000");
+        result = graph.pathToString(graph.getPath(vertices[0], "v3"), ":");
+        assertEquals(" v0:v1 v1:v3", result);
+        result = graph.pathToString(graph.getPath(vertices[0], "v1000"), ":");
+        assertEquals("", result);
+        graph.addVertex("v1000");
+        result = graph.pathToString(graph.getPath(vertices[0], "v1000"), ":");
+        assertEquals("", result);
+        graph.addEdge(vertices[0], "v1000");
+        result = graph.pathToString(graph.getPath(vertices[0], "v1000"), "/");
+        assertEquals(" v0/v1000", result);
+
+    }
+
+    @Test
     public void test100000() {
 
         SimpleGraph<String> graph = new SimpleGraph<>(true);
@@ -93,5 +127,6 @@ public class SimpleGraphLibTest {
         }
         assertTrue(true);
     }
+
 
 }
