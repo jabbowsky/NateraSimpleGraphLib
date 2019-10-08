@@ -1,5 +1,6 @@
 package org.ump;
 
+import java.io.BufferedWriter;
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -38,13 +39,13 @@ public abstract class Graph<T> implements IGraph<T> {
     }
 
     public final void addEdge(T from, T to) {
-        __addEdge(from, to, directed);
+        __addEdge(from, to, !directed);
     }
 
     private void __addEdge(T from, T to, boolean addBack) {
         Edge<T> edge = new Edge<>(from, to);
         addEdge(edge);
-        if(addBack){
+        if (addBack) {
             __addEdge(to, from, false);
         }
     }
@@ -96,11 +97,10 @@ public abstract class Graph<T> implements IGraph<T> {
         discovered[index] = true;
         discovered[indexStart] = true;
         while (parent[index] != -1) {
-            path.add(edges.get(index).get(parentEdge[parent[index]]));
+            path.add(edges.get(parent[index]).get(parentEdge[index]));
             index = parent[index];
-            if(discovered[index]){
-                break;
-            }
+
+            if (discovered[index]) break;
             discovered[index] = true;
         }
         Collections.reverse(path);
@@ -119,5 +119,17 @@ public abstract class Graph<T> implements IGraph<T> {
     public int getCountVertices() {
         return countVertices;
     }
+
+    public String pathToString(List<Edge<T>> path, String delimiter) {
+        StringBuilder stringMaker = new StringBuilder();
+        for (Edge<T> edge : path) {
+            stringMaker.append(' ');
+            stringMaker.append(edge.getFrom().toString());
+            stringMaker.append(delimiter);
+            stringMaker.append(edge.getTo().toString());
+        }
+        return stringMaker.toString();
+    }
+
 
 }

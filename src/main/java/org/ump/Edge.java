@@ -6,7 +6,7 @@ public class Edge<T> {
     protected T from;
     protected T to;
 
-    Edge(T from, T to){
+    Edge(T from, T to) {
         this.from = from;
         this.to = to;
     }

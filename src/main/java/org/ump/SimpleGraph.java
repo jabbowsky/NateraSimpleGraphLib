@@ -8,7 +8,7 @@ public class SimpleGraph<T> extends Graph<T> {
 
     Map<T, Integer> indexMap;
 
-    SimpleGraph(){
+    SimpleGraph() {
         this(false);
     }
 
@@ -17,7 +17,7 @@ public class SimpleGraph<T> extends Graph<T> {
         indexMap = new HashMap<>();
     }
 
-    public void addVertex(T vertex){
+    public void addVertex(T vertex) {
         indexMap.put(vertex, getCountVertices());
         super.addVertex(vertex);
     }
