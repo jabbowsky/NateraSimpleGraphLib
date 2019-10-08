@@ -4,32 +4,31 @@ import java.util.List;
 
 public class SimpleGraphLib {
     public static void main(String[] args){
-        /*
-        SimpleGraph g = new SimpleGraph.Builder().setDirected().build();
+
+        SimpleGraph<String> graph = new SimpleGraph<>(true);
         int testSize = 10;
-        Vertex[] vrtx = new Vertex[testSize];
+        String[] vertices = new String[testSize];
         for(int i = 0;i<testSize ; i++){
-            Vertex<Integer> cur = new Vertex<Integer>(i);
-            vrtx[i] = cur;
-            g.addVertex(cur);
+            vertices[i] = "v"+String.valueOf(i);
+            graph.addVertex(vertices[i]);
             for(int j = 0; j<i; j++){
                 if(i< j+3 ){
-                    g.addEdge(vrtx[i],vrtx[j]);
+                    graph.addEdge(vertices[i],vertices[j]);
                     if(j%2==0){
-                        g.addEdge(vrtx[j],vrtx[i]);
+                        graph.addEdge(vertices[j],vertices[i]);
                     }
                 }
             }
         }
-        for(int i = 0;i<testSize ; i++){
-            for(int j = 0; j<testSize ; j++){
-                List<Edge> path = g.getPath(vrtx[i],vrtx[j]);
-                System.out.print(i + " " + j + " : " + vrtx[i].val);
-                for(Edge e : path){
-                    System.out.print("->" + e.next.val);
+        /*for(int i = 0;i<testSize ; i++){
+            for(int j = 0; j<testSize ; j++){*/
+                List<Edge<String>> path = graph.getPath(vertices[0],vertices[4]);
+                System.out.print(0 + " " + 4 + " : " + vertices[0]);
+                for(Edge<String> edge : path){
+                    System.out.print("->" + edge.getTo());
                 }
                 System.out.println("");
-            }
+        /*    }
         }*/
     }
 }
