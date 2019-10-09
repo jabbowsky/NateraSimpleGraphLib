@@ -4,7 +4,7 @@ import java.util.*;
 
 public abstract class Graph<T> implements IGraph<T> {
 
-    List<T> vertices;
+    private List<T> vertices;
     List<List<Edge<T>>> edges;
 
     private int countVertices;
@@ -52,8 +52,6 @@ public abstract class Graph<T> implements IGraph<T> {
         addEdge(edge);
     }
 
-    public abstract List<Edge<T>> getPath(T from, T to) throws ExceptionVertexNotFound;
-
     List<Edge<T>> rebuildPath(int[] parent, int[] parentEdge, int index, int indexStart) {
         List<Edge<T>> path = new ArrayList<>();
         boolean[] discovered = new boolean[countVertices];
@@ -86,14 +84,14 @@ public abstract class Graph<T> implements IGraph<T> {
     }
 
     String pathToString(List<Edge<T>> path, String delimiter) {
+
         StringBuilder stringMaker = new StringBuilder();
-        if (path != null) {
-            for (Edge<T> edge : path) {
-                stringMaker.append(' ');
-                stringMaker.append(edge.getFrom().toString());
-                stringMaker.append(delimiter);
-                stringMaker.append(edge.getTo().toString());
-            }
+
+        if (path != null && path.size() > 0) {
+
+            stringMaker.append(path.get(0).getFrom().toString());
+            path.forEach(e -> stringMaker.append(delimiter).append(e.getTo().toString()));
+
         }
         return stringMaker.toString();
     }

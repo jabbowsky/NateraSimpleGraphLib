@@ -26,17 +26,17 @@ public class SimpleGraphLibTest {
         }
 
         String result = graph.pathToString(graph.getPath(vertices[0], vertices[9]), "->");
-        assertEquals(" v0->v2 v2->v4 v4->v6 v6->v8 v8->v9", result);
+        assertEquals("v0->v2->v4->v6->v8->v9", result);
         result = graph.pathToString(graph.getPath(vertices[9], vertices[0]), "->");
-        assertEquals(" v9->v7 v7->v5 v5->v3 v3->v1 v1->v0", result);
+        assertEquals("v9->v7->v5->v3->v1->v0", result);
         graph.addEdge(vertices[0], vertices[9]);
         result = graph.pathToString(graph.getPath(vertices[0], vertices[9]), "->");
-        assertEquals(" v0->v9", result);
+        assertEquals("v0->v9", result);
         result = graph.pathToString(graph.getPath(vertices[9], vertices[0]), "->");
-        assertEquals(" v9->v7 v7->v5 v5->v3 v3->v1 v1->v0", result);
+        assertEquals("v9->v7->v5->v3->v1->v0", result);
         graph.addEdge(vertices[7], vertices[0]);
         result = graph.pathToString(graph.getPath(vertices[9], vertices[0]), "->");
-        assertEquals(" v9->v7 v7->v0", result);
+        assertEquals("v9->v7->v0", result);
 
     }
 
@@ -59,14 +59,14 @@ public class SimpleGraphLibTest {
         }
 
         String result = graph.pathToString(graph.getPath(vertices[0], vertices[9]), "->");
-        assertEquals(" v0->v1 v1->v3 v3->v5 v5->v7 v7->v9", result);
+        assertEquals("v0->v1->v3->v5->v7->v9", result);
         result = graph.pathToString(graph.getPath(vertices[9], vertices[0]), "->");
-        assertEquals(" v9->v7 v7->v5 v5->v3 v3->v1 v1->v0", result);
+        assertEquals("v9->v7->v5->v3->v1->v0", result);
         graph.addEdge(vertices[0], vertices[9]);
         result = graph.pathToString(graph.getPath(vertices[0], vertices[9]), "->");
-        assertEquals(" v0->v9", result);
+        assertEquals("v0->v9", result);
         result = graph.pathToString(graph.getPath(vertices[9], vertices[0]), "->");
-        assertEquals(" v9->v0", result);
+        assertEquals("v9->v0", result);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class SimpleGraphLibTest {
             System.out.println("Not found as expected");
         }
         result = graph.pathToString(graph.getPath(vertices[0], "v3"), ":");
-        assertEquals(" v0:v1 v1:v3", result);
+        assertEquals("v0:v1:v3", result);
         try {
             result = "";
             result = graph.pathToString(graph.getPath(vertices[0], "v1000"), ":");
@@ -112,7 +112,7 @@ public class SimpleGraphLibTest {
         assertEquals("", result);
         graph.addEdge(vertices[0], "v1000");
         result = graph.pathToString(graph.getPath(vertices[0], "v1000"), "/");
-        assertEquals(" v0/v1000", result);
+        assertEquals("v0/v1000", result);
 
     }
 
