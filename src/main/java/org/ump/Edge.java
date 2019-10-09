@@ -2,20 +2,20 @@ package org.ump;
 
 public class Edge<T> {
 
-    protected Number weight = 1;
-    protected T from;
-    protected T to;
+    private double weight = 1;
+    private T from;
+    private T to;
 
     Edge(T from, T to) {
         this.from = from;
         this.to = to;
     }
 
-    public Number getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(Number weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 

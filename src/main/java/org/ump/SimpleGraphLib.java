@@ -13,19 +13,36 @@ public class SimpleGraphLib {
             graph.addVertex(vertices[i]);
             for (int j = 0; j < i; j++) {
                 if (i < j + 3) {
-                    graph.addEdge(vertices[i], vertices[j]);
+                    try {
+                        graph.addEdge(vertices[i], vertices[j]);
+                    } catch (ExceptionVertexNotFound exceptionVertexNotFound) {
+                        exceptionVertexNotFound.printStackTrace();
+                    }
                     if (j % 2 == 0) {
-                        graph.addEdge(vertices[j], vertices[i]);
+                        try {
+                            graph.addEdge(vertices[j], vertices[i]);
+                        } catch (ExceptionVertexNotFound exceptionVertexNotFound) {
+                            exceptionVertexNotFound.printStackTrace();
+                        }
                     }
                 }
             }
         }
 
-        graph.addEdge(vertices[0], vertices[9]);
+        try {
+            graph.addEdge(vertices[0], vertices[9]);
+        } catch (ExceptionVertexNotFound exceptionVertexNotFound) {
+            exceptionVertexNotFound.printStackTrace();
+        }
 
         for (int i = 0; i < testSize; i++) {
             for (int j = 0; j < testSize; j++) {
-                List<Edge<String>> path = graph.getPath(vertices[i], vertices[j]);
+                List<Edge<String>> path = null;
+                try {
+                    path = graph.getPath(vertices[i], vertices[j]);
+                } catch (ExceptionVertexNotFound exceptionVertexNotFound) {
+                    exceptionVertexNotFound.printStackTrace();
+                }
                 System.out.print(i + " " + j + " : " + vertices[i]);
                 for (Edge<String> edge : path) {
                     System.out.print("->" + edge.getTo());

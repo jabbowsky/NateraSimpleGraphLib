@@ -8,7 +8,7 @@ import org.junit.Test;
 public class SimpleGraphLibTest {
 
     @Test
-    public void testDirectedPath() {
+    public void testDirectedPath() throws ExceptionVertexNotFound {
         SimpleGraph<String> graph = new SimpleGraph<>(true);
         int testSize = 10;
         String[] vertices = new String[testSize];
@@ -41,7 +41,7 @@ public class SimpleGraphLibTest {
     }
 
     @Test
-    public void testUndirecrtedPath() {
+    public void testUndirecrtedPath() throws ExceptionVertexNotFound {
         SimpleGraph<String> graph = new SimpleGraph<>();
         int testSize = 10;
         String[] vertices = new String[testSize];
@@ -70,7 +70,7 @@ public class SimpleGraphLibTest {
     }
 
     @Test
-    public void testMissingVertex() {
+    public void testMissingVertex() throws ExceptionVertexNotFound {
         SimpleGraph<String> graph = new SimpleGraph<>();
         int testSize = 10;
         String[] vertices = new String[testSize];
@@ -86,13 +86,26 @@ public class SimpleGraphLibTest {
                 }
             }
         }
-
-        String result = graph.pathToString(graph.getPath(vertices[0], "v1000"), "->");
+        String result = "";
+        try {
+            result = graph.pathToString(graph.getPath(vertices[0], "v1000"), "->");
+        } catch (ExceptionVertexNotFound e) {
+            System.out.println("Not found as expected");
+        }
         assertEquals("", result);
-        graph.addEdge(vertices[0], "v1000");
+        try {
+            graph.addEdge(vertices[0], "v1000");
+        } catch (ExceptionVertexNotFound e) {
+            System.out.println("Not found as expected");
+        }
         result = graph.pathToString(graph.getPath(vertices[0], "v3"), ":");
         assertEquals(" v0:v1 v1:v3", result);
-        result = graph.pathToString(graph.getPath(vertices[0], "v1000"), ":");
+        try {
+            result = "";
+            result = graph.pathToString(graph.getPath(vertices[0], "v1000"), ":");
+        } catch (ExceptionVertexNotFound e) {
+            System.out.println("Not found as expected");
+        }
         assertEquals("", result);
         graph.addVertex("v1000");
         result = graph.pathToString(graph.getPath(vertices[0], "v1000"), ":");
@@ -104,7 +117,7 @@ public class SimpleGraphLibTest {
     }
 
     @Test
-    public void test100000() {
+    public void test100000() throws ExceptionVertexNotFound {
 
         SimpleGraph<String> graph = new SimpleGraph<>(true);
         int testSize = 100000;
